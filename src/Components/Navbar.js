@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Navbar() {
+function Navbar(props) {
     return (
         <>
 
@@ -9,9 +9,10 @@ function Navbar() {
                     <h1 className="font-bold text-2xl">Orders</h1>
                 </div>
                 <div className="mr-5">
-                    <button className="border border-black rounded-md bg-[#4b559e] w-[130px] text-white">CREATE NEW </button>
+                    <button  className="border border-black rounded-md bg-[#4b559e] w-[130px] text-white" onClick={props.handleClick}>CREATE NEW </button>
                 </div>
             </nav>
+
 
 
 
