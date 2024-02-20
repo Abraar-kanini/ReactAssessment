@@ -3,10 +3,18 @@ import Table from './Table'
 
 
 function SearchBar() {
-    const [Data, setData] = useState('')
+    const [Data, setData] = useState({
+       
+        Search:"",
+        Status:""
+    })
 
     const HandleInput=(event)=>{
-      setData(event.target.value);
+      const {name,value}= event.target;
+      setData({
+        ...Data,
+        [name]:value
+      })
     }
     console.log(Data);
     return (
@@ -19,7 +27,7 @@ function SearchBar() {
                         <span className="material-symbols-outlined mt-2 absolute">
                             search
                         </span>
-                        <input onChange={HandleInput} className=" w-[100%] p-2 pl-6   rounded-lg shadow-lg shadow-gray-700/40" type="text" name="" id="" />
+                        <input onChange={HandleInput} className=" w-[100%] p-2 pl-6   rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Search" id="" />
                     </div>
                 </div>
 
@@ -39,11 +47,12 @@ function SearchBar() {
                 <div className="w-[25%] h-[100%]  self-center flex flex-col justify-center">
 
                     <h2>Category</h2>
-                    <select className=" p-2 rounded-lg shadow-lg shadow-gray-500/40 w-[100%]" id="cars" name="cars">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="fiat">Fiat</option>
-                        <option value="audi">Audi</option>
+                    <select onChange={HandleInput} className=" p-2 rounded-lg shadow-lg shadow-gray-500/40 w-[100%]" id="cars" name="Status">
+                    <option value="all">All</option>
+                        <option value="done">Done</option>
+                        <option value="notdone">Not Done</option>
+                        <option value="ongoing">On Going</option>
+                        <option value="yettostart">Yet To Start</option>
                     </select>
 
 

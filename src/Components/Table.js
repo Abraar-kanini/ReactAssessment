@@ -29,24 +29,51 @@ function Table(props) {
   }
   const SaveColumn = (event) => {
     event.preventDefault();
-    try{
-    
-      for (const iterator of Columns) {
-        if(iterator.ID===Column.ID){
-          throw new Error("There is same id exist");
-        }
-        
-      }
-      SetColumns([...Columns, Column]);
-    }
-    catch(error){
-      console.log(error);
+    try {
+      let isIDExist = false;
 
+      // Check if the ID already exists in the Columns array
+      for (let i = 0; i < Columns.length; i++) {
+        if (Columns[i].ID === Column.ID) {
+          // Update the existing column with the same ID
+          Columns[i] = Column;
+          isIDExist = true;
+          break;
+        }
+      }
+
+      // If the ID doesn't exist, add the new column to Columns
+      if (!isIDExist) {
+        SetColumns([...Columns, Column]);
+      } else {
+        // If the ID exists, update the state with the modified Columns array
+        SetColumns([...Columns]);
+      }
+    } catch (error) {
+      console.log(error);
     }
-      
-    
-   
-  }
+  };
+
+  const Edit = (event, items) => {
+    event.preventDefault();
+    value.handleclick(event);
+    // Do something with the items data, for example, update the state
+    SetColumn({
+      ID: items.ID,
+      Shpify: items.Shpify,
+      Date: items.Date,
+      Status: items.Status,
+      Customer: items.Customer,
+      Mail: items.Mail,
+      Country: items.Country,
+      Shipping: items.Shipping,
+      Source: items.Source,
+      OrderType: items.OrderType
+    });
+  };
+
+
+
   console.log(Column);
   console.log(Columns)
   return (
@@ -58,16 +85,16 @@ function Table(props) {
       >
         <form action="" className="flex flex-wrap  gap-4">
 
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="ID" id="" placeholder="Enter The ID" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Shpify" id="" placeholder="Enter The Shpify" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="date" name="Date" id="" placeholder="Enter The Date" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Status" id="" placeholder="Enter The Status" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Customer" id="" placeholder="Enter The Customer Nmae" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="email" name="Mail" id="" placeholder="Enter The E-Mail" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Country" id="" placeholder="Enter The Country" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Shipping" id="" placeholder="Enter The Shipping" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Source" id="" placeholder="Enter The Source" />
-          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="OrderType" id="" placeholder="Enter The Order Type" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="ID" value={Column.ID} id="" placeholder="Enter The ID" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Shpify" value={Column.Shpify} id="" placeholder="Enter The Shpify" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="date" name="Date" value={Column.Date} id="" placeholder="Enter The Date" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Status" value={Column.Status} id="" placeholder="Enter The Status" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Customer" value={Column.Customer} id="" placeholder="Enter The Customer Nmae" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="email" name="Mail" value={Column.Mail} id="" placeholder="Enter The E-Mail" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Country" value={Column.Country} id="" placeholder="Enter The Country" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Shipping" value={Column.Shipping} id="" placeholder="Enter The Shipping" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Source" value={Column.Source} id="" placeholder="Enter The Source" />
+          <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="OrderType" value={Column.OrderType} id="" placeholder="Enter The Order Type" />
 
           <button onClick={SaveColumn}><span className="material-symbols-outlined">
             done
@@ -110,9 +137,9 @@ function Table(props) {
         </div>
 
         <div className="table">
-        <table className="w-full border-collapse border border-gray-300">
-        <thead>
-            <tr>
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr>
                 <th className="border border-gray-300 px-4 py-2">Column 1</th>
                 <th className="border border-gray-300 px-4 py-2">Column 2</th>
                 <th className="border border-gray-300 px-4 py-2">Column 3</th>
@@ -125,29 +152,36 @@ function Table(props) {
                 <th className="border border-gray-300 px-4 py-2">Column 10</th>
                 <th className="border border-gray-300 px-4 py-2">Column 11</th>
                 <th className="border border-gray-300 px-4 py-2">Column 12</th>
-            </tr>
-        </thead>
-        <tbody>
-          {Columns.filter((item)=>{
-            return props.value.toLowerCase()==='' ? item :item.ID.includes(props.value);
-          }).map((items)=>{
-        return    <tr key={items.ID}>
-                <td className="border border-gray-300 px-4 py-2">{items.ID}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Shpify}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Date}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Status}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Customer}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Mail}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Country}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Shipping}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.Source}</td>
-                <td className="border border-gray-300 px-4 py-2">{items.OrderType}</td>
-                <td className="border border-gray-300 px-4 py-2">Data 11</td>
-                <td className="border border-gray-300 px-4 py-2">Data 12</td>
-            </tr>
-          })} 
-        </tbody>
-    </table>
+              </tr>
+            </thead>
+            <tbody>
+              {Columns.filter((item) => {
+
+                const isStatusMatch = props.value.Status.toLowerCase() === 'all' || item.Status.toLowerCase().includes(props.value.Status.toLowerCase());
+                const isIDMatch = props.value.Search.toLowerCase() === '' || item.ID.toLowerCase().includes(props.value.Search.toLowerCase());
+
+                return isStatusMatch && isIDMatch;
+
+              }).map((items) => {
+                return <tr key={items.ID}>
+                  <td className="border border-gray-300 px-4 py-2">{items.ID}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Shpify}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Date}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Status}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Customer}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Mail}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Country}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Shipping}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.Source}</td>
+                  <td className="border border-gray-300 px-4 py-2">{items.OrderType}</td>
+                  <td onClick={(event) => Edit(event, items)} className="border border-gray-300 px-4 py-2"><span class="material-symbols-outlined">
+                    edit_square
+                  </span></td>
+                  <td className="border border-gray-300 px-4 py-2">Data 12</td>
+                </tr>
+              })}
+            </tbody>
+          </table>
 
 
 

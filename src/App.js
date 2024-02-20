@@ -10,7 +10,7 @@ import { UpdateContext } from './Components/Context';
 
 function App() {
   const [bool, setbool] = useState(false)
-  
+
 
   const handleclick = (event) => {
     event.preventDefault();
@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      <UpdateContext.Provider value={{handleclick,bool}}>
+      <UpdateContext.Provider value={{ handleclick, bool }}>
         <Navbar />
         <SearchBar />
         {/* <Table  /> */}
