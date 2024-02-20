@@ -12,7 +12,8 @@ function App() {
   const [bool, setbool] = useState(false)
   
 
-  const handleclick = () => {
+  const handleclick = (event) => {
+    event.preventDefault();
     console.log("i am clicking")
     setbool(!bool);
     console.log(bool);
