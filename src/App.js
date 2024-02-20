@@ -2,7 +2,7 @@
 import './App.css';
 import Navbar from './Components/Navbar';
 import SearchBar from './Components/SearchBar';
-import Table from './Components/Table';
+// import Table from './Components/Table';
 import React, { useState } from "react";
 import { UpdateContext } from './Components/Context';
 
@@ -24,7 +24,7 @@ function App() {
       <UpdateContext.Provider value={{handleclick,bool}}>
         <Navbar />
         <SearchBar />
-        <Table  />
+        {/* <Table  /> */}
       </UpdateContext.Provider>
 
     </>

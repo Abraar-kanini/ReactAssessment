@@ -1,7 +1,14 @@
-import React from 'react'
+import React,{useState} from 'react'
+import Table from './Table'
 
 
 function SearchBar() {
+    const [Data, setData] = useState('')
+
+    const HandleInput=(event)=>{
+      setData(event.target.value);
+    }
+    console.log(Data);
     return (
         <>
             <div className="w-[95vw] h-[17vh] border border-gray rounded-xl shadow-lg shadow-gray-500/40 mt-5 m-auto flex flex-wrap gap-3">
@@ -9,10 +16,10 @@ function SearchBar() {
 
                     <h2>What Are You Looking For</h2>
                     <div className=" relative w-[100%]">
-                        <span class="material-symbols-outlined mt-2 absolute">
+                        <span className="material-symbols-outlined mt-2 absolute">
                             search
                         </span>
-                        <input className=" w-[100%] p-2 pl-6   rounded-lg shadow-lg shadow-gray-700/40" type="text" name="" id="" />
+                        <input onChange={HandleInput} className=" w-[100%] p-2 pl-6   rounded-lg shadow-lg shadow-gray-700/40" type="text" name="" id="" />
                     </div>
                 </div>
 
@@ -45,7 +52,7 @@ function SearchBar() {
 
                 <div className="w-[15%] h-[100%]  self-center flex items-center justify-between ">
                     <button className="border border-gray-300 rounded-lg shadow-lg shadow-gray-500/40 h-[5vh] w-[30%] flex items-center justify-center mt-7">
-                        <span class="material-symbols-outlined">
+                        <span className="material-symbols-outlined">
                             keyboard_double_arrow_down
                         </span>
                     </button>
@@ -59,12 +66,12 @@ function SearchBar() {
             </div>
 
 
-            
 
 
-            
 
 
+
+            <Table value={Data} />
 
         </>
     )

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UpdateContext } from "./Context";
 
-function Table() {
+function Table(props) {
 
   const value = useContext(UpdateContext);
 
@@ -69,9 +69,9 @@ function Table() {
           <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="Source" id="" placeholder="Enter The Source" />
           <input onChange={HandleInputChange} className="rounded-lg shadow-lg shadow-gray-700/40" type="text" name="OrderType" id="" placeholder="Enter The Order Type" />
 
-          <button onClick={SaveColumn}><span class="material-symbols-outlined">
+          <button onClick={SaveColumn}><span className="material-symbols-outlined">
             done
-          </span></button><button onClick={value.handleclick}><span class="material-symbols-outlined">
+          </span></button><button onClick={value.handleclick}><span className="material-symbols-outlined">
             block
           </span></button>
 
@@ -96,12 +96,12 @@ function Table() {
             <option value="audi">Audi</option>
           </select>
           <button>DiPatched Selected</button>
-          <h1 class="flex items-center">
-            <span class="material-symbols-outlined inline-block">
+          <h1 className="flex items-center">
+            <span className="material-symbols-outlined inline-block">
               chevron_left
             </span>
-            <span class="inline-block">1234</span>
-            <span class="material-symbols-outlined inline-block">
+            <span className="inline-block">1234</span>
+            <span className="material-symbols-outlined inline-block">
               chevron_right
             </span>
           </h1>
@@ -110,39 +110,42 @@ function Table() {
         </div>
 
         <div className="table">
-        <table class="w-full border-collapse border border-gray-300">
+        <table className="w-full border-collapse border border-gray-300">
         <thead>
             <tr>
-                <th class="border border-gray-300 px-4 py-2">Column 1</th>
-                <th class="border border-gray-300 px-4 py-2">Column 2</th>
-                <th class="border border-gray-300 px-4 py-2">Column 3</th>
-                <th class="border border-gray-300 px-4 py-2">Column 4</th>
-                <th class="border border-gray-300 px-4 py-2">Column 5</th>
-                <th class="border border-gray-300 px-4 py-2">Column 6</th>
-                <th class="border border-gray-300 px-4 py-2">Column 7</th>
-                <th class="border border-gray-300 px-4 py-2">Column 8</th>
-                <th class="border border-gray-300 px-4 py-2">Column 9</th>
-                <th class="border border-gray-300 px-4 py-2">Column 10</th>
-                <th class="border border-gray-300 px-4 py-2">Column 11</th>
-                <th class="border border-gray-300 px-4 py-2">Column 12</th>
+                <th className="border border-gray-300 px-4 py-2">Column 1</th>
+                <th className="border border-gray-300 px-4 py-2">Column 2</th>
+                <th className="border border-gray-300 px-4 py-2">Column 3</th>
+                <th className="border border-gray-300 px-4 py-2">Column 4</th>
+                <th className="border border-gray-300 px-4 py-2">Column 5</th>
+                <th className="border border-gray-300 px-4 py-2">Column 6</th>
+                <th className="border border-gray-300 px-4 py-2">Column 7</th>
+                <th className="border border-gray-300 px-4 py-2">Column 8</th>
+                <th className="border border-gray-300 px-4 py-2">Column 9</th>
+                <th className="border border-gray-300 px-4 py-2">Column 10</th>
+                <th className="border border-gray-300 px-4 py-2">Column 11</th>
+                <th className="border border-gray-300 px-4 py-2">Column 12</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="border border-gray-300 px-4 py-2">Data 1</td>
-                <td class="border border-gray-300 px-4 py-2">Data 2</td>
-                <td class="border border-gray-300 px-4 py-2">Data 3</td>
-                <td class="border border-gray-300 px-4 py-2">Data 4</td>
-                <td class="border border-gray-300 px-4 py-2">Data 5</td>
-                <td class="border border-gray-300 px-4 py-2">Data 6</td>
-                <td class="border border-gray-300 px-4 py-2">Data 7</td>
-                <td class="border border-gray-300 px-4 py-2">Data 8</td>
-                <td class="border border-gray-300 px-4 py-2">Data 9</td>
-                <td class="border border-gray-300 px-4 py-2">Data 10</td>
-                <td class="border border-gray-300 px-4 py-2">Data 11</td>
-                <td class="border border-gray-300 px-4 py-2">Data 12</td>
+          {Columns.filter((item)=>{
+            return props.value.toLowerCase()==='' ? item :item.ID.includes(props.value);
+          }).map((items)=>{
+        return    <tr key={items.ID}>
+                <td className="border border-gray-300 px-4 py-2">{items.ID}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Shpify}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Date}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Status}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Customer}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Mail}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Country}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Shipping}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.Source}</td>
+                <td className="border border-gray-300 px-4 py-2">{items.OrderType}</td>
+                <td className="border border-gray-300 px-4 py-2">Data 11</td>
+                <td className="border border-gray-300 px-4 py-2">Data 12</td>
             </tr>
-           
+          })} 
         </tbody>
     </table>
 
