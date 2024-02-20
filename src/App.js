@@ -3,14 +3,16 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import SearchBar from './Components/SearchBar';
 import Table from './Components/Table';
-import React,{useState} from "react";
+import React, { useState } from "react";
+import { UpdateContext } from './Components/Context';
 
 
 
 function App() {
   const [bool, setbool] = useState(false)
+  
 
-  const handleclick=()=>{
+  const handleclick = () => {
     console.log("i am clicking")
     setbool(!bool);
     console.log(bool);
@@ -18,11 +20,12 @@ function App() {
 
   return (
     <>
-    
-    <Navbar handleClick={handleclick} />
-    <SearchBar/>
-            <Table bool={bool} />  
-    
+      <UpdateContext.Provider value={{handleclick,bool}}>
+        <Navbar />
+        <SearchBar />
+        <Table  />
+      </UpdateContext.Provider>
+
     </>
   );
 }

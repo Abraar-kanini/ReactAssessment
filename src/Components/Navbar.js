@@ -1,6 +1,12 @@
 import React from 'react'
+import { useContext } from 'react'
+import { UpdateContext } from './Context'
 
-function Navbar(props) {
+
+function Navbar() {
+
+    const value= useContext(UpdateContext);
+    
     return (
         <>
 
@@ -9,7 +15,7 @@ function Navbar(props) {
                     <h1 className="font-bold text-2xl">Orders</h1>
                 </div>
                 <div className="mr-5">
-                    <button  className="border border-black rounded-md bg-[#4b559e] w-[130px] text-white" onClick={props.handleClick}>CREATE NEW </button>
+                    <button  className="border border-black rounded-md bg-[#4b559e] w-[130px] text-white" onClick={value.handleclick}>CREATE NEW </button>
                 </div>
             </nav>
 
