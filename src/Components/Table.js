@@ -15,8 +15,21 @@ function Table(props) {
     Country: "",
     Shipping: "",
     Source: "",
-    OrderType: ""
+    OrderType: "",
+    CheckBox: false
   })
+
+
+  const handleCheckInput = (clickedItem) => {
+    const updatedColumns = Columns.map(item => {
+      if (item.ID === clickedItem.ID) {
+        return { ...item, CheckBox: !item.CheckBox }; // Toggle the CheckBox value
+      }
+      return item;
+    });
+    SetColumns(updatedColumns);
+  }
+
 
   const [Columns, SetColumns] = useState([]);
 
@@ -72,6 +85,15 @@ function Table(props) {
     });
   };
 
+  const handleDelete = () => {
+    // Filter out the columns where CheckBox is false
+    let updatedColumns = Columns.filter(column => column.CheckBox === false);
+    
+    // Update the state with the filtered columns
+    SetColumns(updatedColumns);
+  }
+  
+
 
 
   console.log(Column);
@@ -122,7 +144,7 @@ function Table(props) {
             <option value="fiat">Fiat</option>
             <option value="audi">Audi</option>
           </select>
-          <button>DiPatched Selected</button>
+          <button onClick={()=>{handleDelete()}}>DiPatched Selected</button>
           <h1 className="flex items-center">
             <span className="material-symbols-outlined inline-block">
               chevron_left
@@ -140,6 +162,7 @@ function Table(props) {
           <table className="w-full border-collapse border border-gray-300">
             <thead>
               <tr>
+                <th className="border border-gray-300 px-4 py-2"><input type="checkbox" name="" id="" /></th>
                 <th className="border border-gray-300 px-4 py-2">Column 1</th>
                 <th className="border border-gray-300 px-4 py-2">Column 2</th>
                 <th className="border border-gray-300 px-4 py-2">Column 3</th>
@@ -151,7 +174,7 @@ function Table(props) {
                 <th className="border border-gray-300 px-4 py-2">Column 9</th>
                 <th className="border border-gray-300 px-4 py-2">Column 10</th>
                 <th className="border border-gray-300 px-4 py-2">Column 11</th>
-                <th className="border border-gray-300 px-4 py-2">Column 12</th>
+
               </tr>
             </thead>
             <tbody>
@@ -164,6 +187,7 @@ function Table(props) {
 
               }).map((items) => {
                 return <tr key={items.ID}>
+                  <td className="border border-gray-300 px-4 py-2"><input checked={items.CheckBox} onClick={() => handleCheckInput(items)} type="checkbox" name="" id="" /></td>
                   <td className="border border-gray-300 px-4 py-2">{items.ID}</td>
                   <td className="border border-gray-300 px-4 py-2">{items.Shpify}</td>
                   <td className="border border-gray-300 px-4 py-2">{items.Date}</td>
@@ -177,7 +201,7 @@ function Table(props) {
                   <td onClick={(event) => Edit(event, items)} className="border border-gray-300 px-4 py-2"><span class="material-symbols-outlined">
                     edit_square
                   </span></td>
-                  <td className="border border-gray-300 px-4 py-2">Data 12</td>
+
                 </tr>
               })}
             </tbody>
