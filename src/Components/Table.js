@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { UpdateContext } from "./Context";
 
 function Table(props) {
+  const [currentPage, SetCurrentPage] = useState(1);
+
 
   const value = useContext(UpdateContext);
 
@@ -88,13 +90,23 @@ function Table(props) {
   const handleDelete = () => {
     // Filter out the columns where CheckBox is false
     let updatedColumns = Columns.filter(column => column.CheckBox === false);
-    
+
     // Update the state with the filtered columns
     SetColumns(updatedColumns);
   }
-  
+
+  const recordsPerPage = 5;
+  const lastIndex = currentPage * recordsPerPage; //5
+  const firstIndex = lastIndex - recordsPerPage;//0
+  const records = Columns.slice(firstIndex, lastIndex); //till 0 to 4 index
+  const nPage = Math.ceil(Columns.length / recordsPerPage);
+  const numbers = [...Array(nPage + 1).keys()].slice(1);
 
 
+  const handlePage = (n) => {
+    SetCurrentPage(n);
+
+  }
 
   console.log(Column);
   console.log(Columns)
@@ -144,12 +156,17 @@ function Table(props) {
             <option value="fiat">Fiat</option>
             <option value="audi">Audi</option>
           </select>
-          <button onClick={()=>{handleDelete()}}>DiPatched Selected</button>
+          <button onClick={() => { handleDelete() }}>DiPatched Selected</button>
           <h1 className="flex items-center">
             <span className="material-symbols-outlined inline-block">
               chevron_left
             </span>
-            <span className="inline-block">1234</span>
+            {
+              numbers.map((n, i) => {
+                return <span onClick={() => { handlePage(n) }} className="inline-block">{n}</span>
+              })
+            }
+
             <span className="material-symbols-outlined inline-block">
               chevron_right
             </span>
@@ -178,7 +195,7 @@ function Table(props) {
               </tr>
             </thead>
             <tbody>
-              {Columns.filter((item) => {
+              {records.filter((item) => {
 
                 const isStatusMatch = props.value.Status.toLowerCase() === 'all' || item.Status.toLowerCase().includes(props.value.Status.toLowerCase());
                 const isIDMatch = props.value.Search.toLowerCase() === '' || item.ID.toLowerCase().includes(props.value.Search.toLowerCase());
