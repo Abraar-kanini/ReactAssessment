@@ -10,7 +10,7 @@ function Navbar() {
     return (
         <>
 
-            <nav className="border border-black w-[100vw] h-[10vh] flex justify-between items-center">
+            <nav className=" w-[100vw] h-[10vh] flex justify-between items-center ">
                 <div className="ml-5">
                     <h1 className="font-bold text-2xl">Orders</h1>
                 </div>
